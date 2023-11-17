@@ -118,7 +118,7 @@ public class ItemService {
         log.info("ElasticSearch query {}", query.toString());
         SearchResponse<Item> response = null;
         try {
-            response = elasticsearchClient.search(q -> q.index("items_index").query(query), Item.class);
+            response = elasticsearchClient.search(q -> q.index("questions_index").query(query), Item.class);
 
         } catch (IOException e) {
             throw new RuntimeException(e);

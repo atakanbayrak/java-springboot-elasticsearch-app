@@ -54,7 +54,7 @@ public class ItemController {
     }
 
     //Oto bulma ve ngram teknolojisi burada kullanılıyor
-    @GetMapping("/autoSugges/{title}")
+    @GetMapping("/autoSuggest/{title}")
     public Set<String> autoSuggestItemsByTitle(@PathVariable String title)
     {
         //Set döndürülmesinin nedeni duplicate elemanlara izin verilmemesi, birden fazla aynı öneri istenmemesi.
