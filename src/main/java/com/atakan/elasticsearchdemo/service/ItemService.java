@@ -80,4 +80,8 @@ public class ItemService {
         log.info("Elastic Search Response {}", response);
         return extractItemsFromResponse(response);
     }
+
+    public List<Item> searchItemsByIdAndTitleWithQuery(String id, String title) {
+        return itemRepository.searchByIdAndTitle(id,title);
+    }
 }

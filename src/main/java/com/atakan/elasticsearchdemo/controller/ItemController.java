@@ -38,4 +38,11 @@ public class ItemController {
     {
         return itemService.searchItemsByFieldAndValue(dto);
     }
+
+    @GetMapping("/search/{id}/{title}")
+    public List<Item> searchItemsByIdAndTitleWithQuery(@PathVariable String id,
+                                                         @PathVariable String title)
+    {
+        return itemService.searchItemsByIdAndTitleWithQuery(id,title);
+    }
 }
