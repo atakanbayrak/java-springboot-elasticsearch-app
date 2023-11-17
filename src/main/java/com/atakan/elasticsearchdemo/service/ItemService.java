@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -65,6 +66,16 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
 
+    public Set<String> extractItemsFromAutoSuggest(SearchResponse<Item> response)
+    {
+        return response.hits()
+            .hits()
+            .stream()
+            .map(Hit::source)
+            .map(Item::getTitle)
+            .collect(Collectors.toSet());
+    }
+
     public List<Item> searchItemsByFieldAndValue(SearchRequestDto dto)
     {
         Supplier<Query> query = EsUtil.buildQueryForFieldAndValue(dto.getFieldName().get(0),
@@ -77,11 +88,42 @@ public class ItemService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        log.info("Elastic Search Response {}", response);
+        log.info("Elastic Search Response {}", response.toString());
         return extractItemsFromResponse(response);
     }
 
-    public List<Item> searchItemsByIdAndTitleWithQuery(String id, String title) {
+    public List<Item> searchItemsByIdAndTitleWithQuery(String id, String title)
+    {
         return itemRepository.searchByIdAndTitle(id,title);
+    }
+
+    public List<Item> boolQuery(SearchRequestDto dto)
+    {
+        var query = EsUtil.createBoolQuery(dto);
+        log.info("ElasticSearch query {}", query.toString());
+        SearchResponse<Item> response = null;
+
+        try {
+            response = elasticsearchClient.search(q -> q.index("questions_index").query(query.get()), Item.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        log.info("ElasticSearch query {}", response.toString());
+        return extractItemsFromResponse(response);
+    }
+
+    public Set<String> findSuggestedItemTitles(String title)
+    {
+        Query query = EsUtil.buildAutoSuggestQuery(title);
+        log.info("ElasticSearch query {}", query.toString());
+        SearchResponse<Item> response = null;
+        try {
+            response = elasticsearchClient.search(q -> q.index("items_index").query(query), Item.class);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        log.info("Elastic Search Response {}", response.toString());
+        return extractItemsFromAutoSuggest(response);
     }
 }

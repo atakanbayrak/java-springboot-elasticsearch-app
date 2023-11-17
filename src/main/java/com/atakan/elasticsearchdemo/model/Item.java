@@ -18,10 +18,10 @@ public class Item {
 
     @Id
     private String id;
-    @Field(name="title", type = FieldType.Text)
+    @Field(name="title", type = FieldType.Text, analyzer = "custom_index", searchAnalyzer = "custom_search")
     private String title;
-    @Field(name="content", type = FieldType.Text)
+    @Field(name="content", type = FieldType.Text, analyzer = "custom_index", searchAnalyzer = "custom_search")
     private String content;
-    @Field(name="category", type = FieldType.Text)
+    @Field(name="category", type = FieldType.Text, analyzer = "custom_index", searchAnalyzer = "custom_search")
     private String category;
 }

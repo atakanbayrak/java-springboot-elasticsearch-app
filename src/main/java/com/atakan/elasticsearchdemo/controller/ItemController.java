@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/items")
@@ -44,5 +45,19 @@ public class ItemController {
                                                          @PathVariable String title)
     {
         return itemService.searchItemsByIdAndTitleWithQuery(id,title);
+    }
+
+    @GetMapping("/boolQuery")
+    public List<Item> boolQuery(@RequestBody SearchRequestDto dto)
+    {
+        return itemService.boolQuery(dto);
+    }
+
+    //Oto bulma ve ngram teknolojisi burada kullanılıyor
+    @GetMapping("/autoSugges/{title}")
+    public Set<String> autoSuggestItemsByTitle(@PathVariable String title)
+    {
+        //Set döndürülmesinin nedeni duplicate elemanlara izin verilmemesi, birden fazla aynı öneri istenmemesi.
+        return itemService.findSuggestedItemTitles(title);
     }
 }
