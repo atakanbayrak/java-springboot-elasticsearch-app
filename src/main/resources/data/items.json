@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "Girmis olduğunuz adres hatalidir hatasi",
+    "content": "Bu hata çoğunlukla aşağıdaki sebeplerden dolayı meydana gelmektedir. Aşağıdaki durumları kontrol etmeniz gerekmektedir. • Client id ve redirect url adresinin uyuşmaması. • Parametrelerin eksikliği. Örn: code challenge ve code challenge method parametreleri. • Redirect url içerisinde özel karakterler (Örn: ‘#’ vb.) bulunması. • Redirect url parametresi büyük küçük harf duyarlıdır bu yüzden e-Devlet Kapısı tarafında tanımlama ile birebir uyuşmak zorundadır.",
+    "category" : "SSO"
+  },
+  {
+    "id": "2",
+    "title": "Gecersiz Authorization Code hatasi",
+    "content": "Geçersiz Authorization Code hatası (Hata Kodu: EDV09.078) çoğunlukla aşağıdaki sebeplerden dolayı meydana gelmektedir. Aşağıdaki durumları kontrol etmeniz gerekmektedir.•Authorization Code değeri birden fazla kez kullanılmaya çalışılmış olabilir veya belirlenen süre içerisinde kullanılmamış olabilir. (Authorization Code değeri en fazla 10 saniye içerisinde kullanılmalıdır.)•Authorization Code değeri alınmış olan redirect url ile Access Token alınmak istenen redirect url farklı olabilir.•Code challenge ve code verifier değerleri uyuşmuyor olabilir. (*)",
+    "category" : "SSO"
+  },
+  {
+    "id": "3",
+    "title": "Missing grant_type parameter value",
+    "content": "Missing grant_type parameter value hatası çoğunlukla aşağıdaki sebeplerden dolayı meydana gelmektedir. Aşağıdaki durumları kontrol etmeniz gerekmektedir. İstek gövdesinin (Body kısmı) uygun formatta oluşturulmamasından kaynaklanır. Body  içerisinde istek  x-www-form-urlencoded şeklinde olmalıdır.",
+    "category" : "SSO"
+  },
+  {
+    "id": "4",
+    "title": "Gecersiz Client Id Hatasi",
+    "content": "Geçersiz Client Id Hatası (Hata Kodu : EDV09.076):Client id bilgisi yanlıştır.Yapılması Gereken: •İstekte yer alan client id bilgisi kontrol edilir. ",
+    "category" : "SSO"
+  },
+  {
+    "id": "5",
+    "title": "Yetkisiz Access Token Hatasi",
+    "content": "Code bilgisi alınırken scope içerisinde belirtilen parametrelerin dışında bir kapsam parametresi gönderilmesinden kaynaklıdır. Yapılması Gereken •Scope içerisinde belirtilen parametreler kontrol edilerek, kapsam parametresine eklenir.NOT:scope parametresi içerisindeki değerler ; karakteri ile ayrılıp birden fazla belirlenebilirken, kapsam için birden fazla değer belirtilemez. Scope içerisinde belirtilen değerler kapsam parametresinde tek tek gönderilir.",
+    "category" : "SSO"
+  },
+  {
+    "id": "6",
+    "title": "Gecersiz Access Token Hatasi",
+    "description": "Geçersiz Access Token Hatası (Hata Kodu: EDV09.079):Access token için geçerli süre dolmuştur. Yapılması Gereken: •Yeniden Access token isteği yapılmalıdır.",
+    "category" : "SSO"
+  }
+]
