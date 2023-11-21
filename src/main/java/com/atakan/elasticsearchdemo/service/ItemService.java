@@ -112,18 +112,44 @@ public class ItemService {
         return extractItemsFromResponse(response);
     }
 
-    public Set<String> findSuggestedItemTitles(String title)
+    public List<String> findSuggestedItemTitles(String title)
     {
         Query query = EsUtil.buildAutoSuggestQuery(title);
         log.info("ElasticSearch query {}", query.toString());
         SearchResponse<Item> response = null;
         try {
-            response = elasticsearchClient.search(q -> q.index("questions_index").query(query), Item.class);
+            return elasticsearchClient.search(q -> q.index("questions_index").query(query), Item.class)
+                    .hits()
+                    .hits()
+                    .stream()
+                    .map(Hit::source)
+                    .map(Item::getTitle)
+                    .collect(Collectors.toList());
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        log.info("Elastic Search Response {}", response.toString());
-        return extractItemsFromAutoSuggest(response);
+        //log.info("Elastic Search Response {}", response.toString());
+        //return extractItemsFromAutoSuggest(response);
+    }
+
+    public List<String> autoSuggestItemsByNameWithQuery(String title)
+    {
+        List<Item> itemList = itemRepository.customAutoSuggest(title);
+        log.info("Elastic Search Response: {}", itemList.toString());
+        return itemList
+                .stream()
+                .map(Item::getTitle)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> autoSuggestItemsByNameFuzzinness(String title)
+    {
+        List<Item> itemList = itemRepository.fuzzyAutoSuggest(title);
+        log.info("Elastic Search Response: {}", itemList.toString());
+        return itemList
+                .stream()
+                .map(Item::getTitle)
+                .collect(Collectors.toList());
     }
 }

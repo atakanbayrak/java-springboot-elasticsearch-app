@@ -55,9 +55,21 @@ public class ItemController {
 
     //Oto bulma ve ngram teknolojisi burada kullanılıyor
     @GetMapping("/autoSuggest/{title}")
-    public Set<String> autoSuggestItemsByTitle(@PathVariable String title)
+    public List<String> autoSuggestItemsByTitle(@PathVariable String title)
     {
         //Set döndürülmesinin nedeni duplicate elemanlara izin verilmemesi, birden fazla aynı öneri istenmemesi.
         return itemService.findSuggestedItemTitles(title);
+    }
+
+    @GetMapping("/suggestionsQuery/{title}")
+    public List<String> autoSuggestItemsByTitleWithQuery(@PathVariable String title)
+    {
+        return itemService.autoSuggestItemsByNameWithQuery(title);
+    }
+
+    @GetMapping("/fuzzyQuery/{title}")
+    public List<String> autoSuggestItemsByTitleFuzziness(@PathVariable String title)
+    {
+        return itemService.autoSuggestItemsByNameFuzzinness(title);
     }
 }
